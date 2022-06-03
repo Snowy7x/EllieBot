@@ -1,7 +1,7 @@
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 
-const client = new Client();
+const client = new Client({ puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']}});
 console.log('Connecting...');
 
 let welcomeMsg = `╭───── • 𒀭 • ─────╮
@@ -24,17 +24,17 @@ let welcomeMsg = `╭───── • 𒀭 • ─────╮
 𝄪𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐄𝐥𝐥𝐢𝐞𝄪`
 
 client.on('qr', (qr) => {
-    console.log('QR RECEIVED');
-    qrcode.generate(qr, { small: true });
+  console.log('QR RECEIVED');
+  qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
-    console.log('Client is ready!');
+  console.log('Client is ready!');
 });
 client.on('message', message => {
-	if(message.body === 'استمارة') {
-		message.reply(welcomeMsg);
-	}
+  if (message.body === 'استمارة') {
+    message.reply(welcomeMsg);
+  }
 });
 console.log('Initializing...');
 client.initialize();
